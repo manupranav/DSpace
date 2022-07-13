@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .models import Message, Room,Topic, User, Message
 from django.db.models import Q
-from .forms  import RoomForm, UserForm, MyUserCreation
+from .forms  import RoomForm, UserForm, MyUserCreationForm
 
 
 
@@ -41,10 +41,10 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 def registerPage(request):
-    form = MyUserCreation()
+    form = MyUserCreationForm()
 
     if request.method == 'POST':
-        form = MyUserCreation(request.POST)
+        form = MyUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
