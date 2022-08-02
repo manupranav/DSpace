@@ -188,4 +188,16 @@ def topicsPage(request):
 
 def activityPage(request):
     room_messages = Message.objects.all()
-    return render(request, 'base/activity.html', {'room_messages':room_messages})    
+    return render(request, 'base/activity.html', {'room_messages':room_messages})
+
+def settings(request):
+    user = request.user
+    form = UserForm(instance=user)
+    if request.method == 'POST':
+        form = UserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk = user.id)
+
+    context = {'form':form}
+    return render(request, 'base/settings.html', context)  
