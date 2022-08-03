@@ -1,0 +1,1 @@
+web: gunicorn Dspace.wsgi --log-file -
